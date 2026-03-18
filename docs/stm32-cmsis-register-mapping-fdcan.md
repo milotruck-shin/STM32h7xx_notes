@@ -99,36 +99,29 @@ So `FDCAN1->CCCR` corresponds to:
 
 ---
 
-## 6) Why this pattern is useful
+## STM32 uses struct-pointer mapping over explicit register assignments
 Instead of raw address code:
 
 ```c
 *(volatile uint32_t *)(0x4000A018) |= 1;
 ```
 
-Use CMSIS style:
+Using CMSIS style:
 
 ```c
 FDCAN1->CCCR |= FDCAN_CCCR_INIT;
 ```
 
-Benefits:
-- Better readability
-- Fewer address/offset mistakes
-- Easier maintenance
-- Consistent with HAL/CMSIS style
+Only need to define:
+- one base address macro (FDCAN1_BASE)
+- one register-map struct (FDCAN_GlobalTypeDef)
+- one typed instance macro (FDCAN1) <br>
+
+Can access registers by name (FDCAN1->CCCR) instead of raw addresses.
 
 ---
 
-## 7) Practical usage rules
-- Avoid writing arbitrary values to registers.
-- Use bit mask macros (e.g. `FDCAN_CCCR_*`).
-- Follow peripheral init/config sequence from reference manual.
-- Do not alter reserved bits unless documentation allows it.
-
----
-
-## 8) Offset verification method
+## Offset verification method
 
 ```c
 #include <stddef.h>
@@ -141,7 +134,7 @@ This confirms your struct layout matches expected hardware offsets.
 
 ---
 
-## 9) Conclusion, where definitions usually live
+## Conclusion, where definitions usually live
 - Device header: `stm32h755xx.h`
 - CMSIS core/compiler headers: `core_cm7.h`, `cmsis_compiler.h` (for `__IO`)
 - Useful search terms:
@@ -152,7 +145,7 @@ This confirms your struct layout matches expected hardware offsets.
 
 ---
 
-## 10) Mental model
+## Mental model
 **Base address + typed struct pointer + ordered fields = named access to real hardware registers.**
 ```
 
