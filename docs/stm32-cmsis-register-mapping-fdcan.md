@@ -31,7 +31,7 @@ This gives readable and safer code. A clever way to map the registers through st
 - `FDCAN1`: same address cast to `FDCAN_GlobalTypeDef *`.
 
 Firstly, (FDCAN_GlobalTypeDef *) FDCAN1_BASE means that the pointer variable has a value of FDCAN1_BASE. Equivalent to `FDCAN_GlobalTypeDef *FDCAN1 = FDCAN1_BASE.`
-So `FDCAN1` is a typed pointer to the entire FDCAN1 register map.
+<br>So `FDCAN1` is a typed pointer to the entire FDCAN1 register map.
 
 ---
 
