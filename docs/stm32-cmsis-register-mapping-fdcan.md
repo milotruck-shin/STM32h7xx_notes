@@ -47,7 +47,7 @@ typedef struct
   ...
   __IO uint32_t CCCR;      /*!< offset: 0x018 */
   ...
-} FDCAN_GlobalTypeDef;
+} FDCAN_GlobalTypeDef; 
 ```
 
 ### Important
@@ -70,7 +70,16 @@ Conceptually equivalent to:
 volatile uint32_t CCCR;
 ```
 
-This ensures the compiler performs real memory accesses and does not optimise register reads/writes away.
+This ensures the compiler performs real memory accesses and does not optimise register reads/writes away.`_IO` is defined in CMSIS core headers, via `core_cm7.h`. <br>
+
+```
+#define __I     volatile const
+#define __O     volatile
+#define __IO    volatile
+```
+- __I = read-only volatile (input) <br>
+- __O = write-only volatile (output) <br>
+- __IO = read/write volatile
 
 ---
 
@@ -119,7 +128,7 @@ Benefits:
 
 ---
 
-## 8) Offset verification (optional but useful)
+## 8) Offset verification method
 
 ```c
 #include <stddef.h>
@@ -132,7 +141,7 @@ This confirms your struct layout matches expected hardware offsets.
 
 ---
 
-## 9) Where definitions usually live
+## 9) Conclusion, where definitions usually live
 - Device header: `stm32h755xx.h`
 - CMSIS core/compiler headers: `core_cm7.h`, `cmsis_compiler.h` (for `__IO`)
 - Useful search terms:
@@ -143,11 +152,7 @@ This confirms your struct layout matches expected hardware offsets.
 
 ---
 
-## 10) One-line mental model
+## 10) Mental model
 **Base address + typed struct pointer + ordered fields = named access to real hardware registers.**
 ```
 
-Estimated effort: 5–10 minutes to commit with a small README link.
-
-**One-line summary:** Here’s a GitHub-ready Markdown note you can paste directly into your repo under `docs/`.  
-Next step: if you want, I can also generate a short `README.md` section linking this doc and your learning outcomes.
