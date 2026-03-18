@@ -16,7 +16,7 @@ CMSIS represents them with:
 2. **A C struct** matching register layout
 3. **A typed pointer macro** to that struct
 
-This gives readable and safer code.
+This gives readable and safer code. A clever way to map the registers through stuct rather than explicitly writing every macro Def of register values
 
 ---
 
